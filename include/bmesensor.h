@@ -11,6 +11,9 @@
 #include <Adafruit_BME280.h>
 #elif defined HAS_BMP180
 #include <Adafruit_BMP085.h>
+#elif defined HAS_BMP388
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP3XX.h>
 #endif
 
 extern Ticker bmecycler;
