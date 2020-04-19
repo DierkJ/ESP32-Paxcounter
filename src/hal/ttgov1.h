@@ -19,7 +19,11 @@
 #define HAS_BUTTON KEY_BUILTIN
 
 // enable only if you want to store a local paxcount table on the device
-#define HAS_SDCARD  1      // this board has an SD-card-reader/writer
+
+//
+// 20200408 AD: V1 Board has no SD-Card.  Leaving this enabled, will cause the Lora to fail!!!
+//
+//#define HAS_SDCARD  1      // this board has an SD-card-reader/writer
 // Pins for SD-card
 #define SDCARD_CS    (13)
 #define SDCARD_MOSI  (15)
