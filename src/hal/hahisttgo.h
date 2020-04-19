@@ -37,6 +37,8 @@
 #define HAS_BMP388 SDA, SCL
 #define BME680_ADDR BME680_I2C_ADDR_PRIMARY // !! connect SDIO of BME680 to GND !!
 
+// enable Hahis Solar PMU
+#define HAS_SOLAR 1
 
 // Pins for I2C interface of OLED Display
 #define MY_DISPLAY_SDA (4)
