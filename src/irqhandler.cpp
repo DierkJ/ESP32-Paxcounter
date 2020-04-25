@@ -69,6 +69,21 @@ void irqHandler(void *pvParameters) {
     }
 #endif
 
+// Solar data to be read?
+#if (HAS_SOLAR)
+    if (InterruptStatus & SOLAR_IRQ) 
+    {
+      solar_storedata(&solarStatus);
+      InterruptStatus &= ~SOLAR_IRQ;
+    }
+    
+    if (InterruptStatus & PMU_IRQ) 
+    {
+      Coloumb_PowerEvent_IRQ();
+      InterruptStatus &= ~PMU_IRQ;
+    }
+#endif
+
     // are cyclic tasks due?
     if (InterruptStatus & CYCLIC_IRQ) {
       doHousekeeping();

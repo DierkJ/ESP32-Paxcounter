@@ -116,6 +116,7 @@ typedef struct {
   float pm25;
 } sdsStatus_t;
 
+
 extern std::set<uint16_t, std::less<uint16_t>, Mallocator<uint16_t>> macs;
 extern std::array<uint64_t, 0xff>::iterator it;
 extern std::array<uint64_t, 0xff> beacons;
@@ -139,6 +140,7 @@ extern RTC_DATA_ATTR runmode_t RTC_runmode;
 #include "payload.h"
 #include "blescan.h"
 #include "power.h"
+#include "solar.h"
 
 #if (HAS_GPS)
 #include "gpsread.h"

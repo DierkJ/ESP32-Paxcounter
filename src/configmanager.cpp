@@ -13,6 +13,7 @@ esp_err_t err;
     SENSOR1_DATA | SENSOR2_DATA | SENSOR3_DATA) &    \
    (~BATT_DATA) )
 
+
 // populate cfg vars with factory settings
 void defaultConfig() {
   cfg.loradr = LORADRDEFAULT;     // 0-15, lora datarate, see paxcounter.conf

@@ -59,12 +59,14 @@ DisplayIRQ      -> esp32 timer 0  -> irqHandlerTask (Core 1)
 CLOCKIRQ        -> esp32 timer 1  -> ClockTask (Core 1)
 ButtonIRQ       -> external gpio  -> irqHandlerTask (Core 1)
 PMUIRQ          -> PMU chip gpio  -> irqHandlerTask (Core 1)
+                -> (AD) or Solar Coloumb Counter LTC4150
 
 fired by software (Ticker.h)
 TIMESYNC_IRQ    -> timeSync()     -> irqHandlerTask (Core 1)
 CYCLIC_IRQ      -> housekeeping() -> irqHandlerTask (Core 1)
 SENDCYCLE_IRQ   -> sendcycle()    -> irqHandlerTask (Core 1)
 BME_IRQ         -> bmecycle()     -> irqHandlerTask (Core 1)
+SOLAR_IRQ       -> solarcycle()   -> irqHandlerTask (Core 1)
 
 
 // External RTC timer (if present)
@@ -261,6 +263,11 @@ void setup() {
   strcat_P(features, " BATT");
   calibrate_voltage();
   batt_voltage = read_voltage();
+#endif
+
+#ifdef HAS_SOLAR
+  strcat_P(features, " SOLAR");
+  solar_init();
 #endif
 
 #if (USE_OTA)

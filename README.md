@@ -1,18 +1,10 @@
 # ESP32-Paxcounter
 **Wifi & Bluetooth driven, LoRaWAN enabled, battery powered mini Paxcounter built on cheap ESP32 LoRa IoT boards**
-
-Tutorial (in german language): https://www.heise.de/select/make/2019/1/1551099236518668
-
+**Dierk:  Solar powered
 
 
+<img src="img/BirdsCase.jpg">
 <img src="img/Paxcounter-title.jpg">
-<img src="img/Paxcounter-ttgo.jpg">
-<img src="img/Paxcounter-lolin.gif">
-<img src="img/Paxcounter-Screen.png">
-<img src="img/TTGO-case.jpg">
-<img src="img/TTGO-curves.jpg">
-<img src="img/Paxcounter-LEDmatrix.jpg">
-<img src="img/Paxcounter-Clock.png">
 
 # Use case
 
@@ -336,6 +328,21 @@ Hereafter described is the default *plain* format, which uses MSB bit numbering.
 **Port #9:** Time/Date
 
   	bytes 1-4:	board's local time/date in UNIX epoch (number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT), not counting leap seconds) 
+
+**Port #13:** Solar Power Info
+
+	bytes 1-2:		Voltage on Solar Panel [V]
+	bytes 3-4:		Current out of Solar Panel [mA]
+	bytes 5-6:		Power from Solar Panel [mW]
+	bytes 7-8:		LiPo Battery state of Charge [mAh]
+	bytes 9-10:		LiPo State of Charge [%]
+	bytes 11-12:	Current into (+ mA) or from LiPo (- mA)
+	bytes 13-14:	Voltage on Battery [V]
+	bytes 15-16:	Voltage on CPU [V]
+	bytes 17-18:	Temp on Battery / Housing [°C]
+	byte 19:		0: Charging, 1: Discharging
+	byte 20-21:		# of Battery Cycles
+
 
 # Remote control
 

@@ -231,7 +231,7 @@ void bme_storedata(bmeStatus_t *bme_store) {
     bme_store->temperature = bmp.readTemperature();
     bme_store->pressure = (bmp.readPressure() / 100.0); // conversion Pa -> hPa
     // bme.readAltitude(SEALEVELPRESSURE_HPA);
-    bme_store->iaq = 0; // IAQ feature not present with BME280
+    bme_store->iaq = 0; // IAQ feature not present with BME388
 
 
 #endif

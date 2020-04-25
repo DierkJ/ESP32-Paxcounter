@@ -148,6 +148,13 @@ void PayloadConvert::addTime(time_t value) {
   buffer[cursor++] = (byte)((time & 0x000000FF));
 }
 
+void PayloadConvert::addSolar(solarStatus_t value) 
+{
+#if (HAS_SOLAR)
+
+#endif
+}
+
 /* ---------------- packed format with LoRa serialization Encoder ----------
  */
 // derived from
@@ -246,6 +253,23 @@ void PayloadConvert::addButton(uint8_t value) {
 void PayloadConvert::addTime(time_t value) {
   uint32_t time = (uint32_t)value;
   writeUint32(time);
+}
+
+void PayloadConvert::addSolar(solarStatus_t value) 
+{
+#if (HAS_SOLAR)
+  writeFloat(value.fSolarVoltage);
+  writeFloat(value.fSolarCurrent);
+  writeFloat(value.fSolarPower);
+  writeFloat(value.fSoC_mAh);
+  writeFloat(value.fSoC);
+  writeFloat(value.fBatteryCurrent);
+  writeFloat(value.fBatteryVoltage);
+  writeFloat(value.fESPVoltage);
+  writeFloat(value.fTemperature);
+  writeUint8(value.Charging);
+  writeUint16(value.iBatCycles);
+#endif
 }
 
 void PayloadConvert::uintToBytes(uint64_t value, uint8_t byteSize) {
@@ -457,7 +481,6 @@ void PayloadConvert::addSensor(uint8_t buf[]) {
 
 void PayloadConvert::addBME(bmeStatus_t value) {
 #if (HAS_BME)
-
   // data value conversions to meet cayenne data type definition
   // 0.1°C per bit => -3276,7 .. +3276,7 °C
   int16_t temperature = (int16_t)(value.temperature * 10.0);
@@ -492,6 +515,43 @@ void PayloadConvert::addBME(bmeStatus_t value) {
   buffer[cursor++] = lowByte(iaq);
 #endif // HAS_BME
 }
+
+
+void PayloadConvert::addSolar(solarStatus_t value) 
+{
+#if (HAS_SOLAR)
+  uint16_t power = value.fSolarPower / 10;
+  uint16_t soc = value.fSoC;
+  int16_t ibat = (int16_t) value.fBatteryCurrent;
+
+// SolarVoltage
+#if (PAYLOAD_ENCODER == 3)
+  buffer[cursor++] = LPP_SOLAR_POWER_CHANNEL;
+#endif
+  buffer[cursor++] = LPP_ANALOG_INPUT; // 0.01 signed
+  buffer[cursor++] = highByte(power);
+  buffer[cursor++] = lowByte(power);
+
+// Battery SoC in %
+#if (PAYLOAD_ENCODER == 3)
+  buffer[cursor++] = LPP_BATT_SOC;
+#endif
+  buffer[cursor++] = LPP_ANALOG_INPUT; // 0.01 signed
+  buffer[cursor++] = highByte(soc);
+  buffer[cursor++] = lowByte(soc);
+
+// Battery Current
+#if (PAYLOAD_ENCODER == 3)
+  buffer[cursor++] = LPP_BATT_CURRENT;
+#endif
+  buffer[cursor++] = LPP_ANALOG_INPUT; // 0.01 signed
+  buffer[cursor++] = highByte(ibat);
+  buffer[cursor++] = lowByte(ibat);
+
+#endif  // HAS_SOLAR
+}
+
+
 
 void PayloadConvert::addButton(uint8_t value) {
 #ifdef HAS_BUTTON

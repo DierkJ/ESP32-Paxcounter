@@ -38,7 +38,15 @@
 #define BME680_ADDR BME680_I2C_ADDR_PRIMARY // !! connect SDIO of BME680 to GND !!
 
 // enable Hahis Solar PMU
+//
 #define HAS_SOLAR 1
+
+// wire GPIO Pin to Output of charger (TODO: Check with TTGO schematic)
+#define BAT_MEASURE_ADC ADC1_GPIO35_CHANNEL // battery probe GPIO pin -> ADC1_CHANNEL_7
+#define BAT_VOLTAGE_DIVIDER 2               // voltage divider 100k/100k on board
+
+#define PMU_INT GPIO_NUM_34                 // LTC4150 interrupt ?
+#define PMU_DIR GPIO_NUM_33                 // direction pin: Low: Discharging, High: Charging
 
 // Pins for I2C interface of OLED Display
 #define MY_DISPLAY_SDA (4)

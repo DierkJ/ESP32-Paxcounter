@@ -88,6 +88,11 @@ function Decoder(bytes, port) {
             return decode(bytes, [uint32, uint8], ['time', 'timestatus']);
         }
     }
+    if (port === 13) 
+    {
+        // Solar data     
+        return decode(bytes, [float, float, float, float, float, float, float, float, float, int8, int16], ['Vsolar', 'Isolar', 'Psolar', 'SoCmAh', 'SoC', 'IBatt', 'VBatt', 'Vcpu', 'Temperture', 'Charge', 'Cycles' ]);
+    }
 
 }
 

@@ -71,7 +71,7 @@ void sendData() {
 #endif
 
   while (bitmask) {
-    switch (bitmask & mask) {
+   switch (bitmask & mask) {
 
 #if ((WIFICOUNTER) || (BLECOUNTER))
     case COUNT_DATA:
@@ -158,11 +158,21 @@ void sendData() {
 #endif
 
 #if (defined BAT_MEASURE_ADC || defined HAS_PMU)
+
+#if (defined HAS_SOLAR)
+    case BATT_DATA:
+      payload.reset();
+      payload.addSolar(solarStatus);
+      SendPayload(SOLARPORT, prio_normal);
+      break;
+#else
     case BATT_DATA:
       payload.reset();
       payload.addVoltage(read_voltage());
       SendPayload(BATTPORT, prio_normal);
       break;
+#endif
+
 #endif
 
     } // switch

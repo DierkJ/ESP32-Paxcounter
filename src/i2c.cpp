@@ -61,6 +61,14 @@ int i2c_scan(void) {
           ESP_LOGI(TAG, "0x%X: 24AA02E64 serial EEPROM", addr);
           break;
 
+        case INA219_ADDRESS:
+        case INA219_ADDRESS+1:
+        case INA219_ADDRESS+4:
+        case INA219_ADDRESS+5:
+          ESP_LOGI(TAG, "0x%X: INA219 current monitor", addr);
+          break;
+
+
         default:
           ESP_LOGI(TAG, "0x%X: Unknown device", addr);
           break;
